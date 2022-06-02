@@ -36,3 +36,21 @@ app.post("/", (req, res) => {
 	});
 	res.redirect("/");
 });
+
+app.get( "/delete/:seq", (req, res) => {
+	var sql = 'delete from guestBook where seq=?';
+	var params = [ req.params.seq ];
+	conn.query( sql, params, (err, rows) => {
+		if (err) console.log("query is not excuted. modify fail!\n" + err);
+		else res.redirect("/");
+	})
+});
+
+app.post( "/modify/:seq", (req, res) => {
+	var sql = 'update guestBook set text=? where seq=?';
+	var params = [ req.body.text, req.params.seq ];
+	conn.query( sql, params, (err, rows) => {
+		if (err) console.log("query is not excuted. modify fail!\n" + err);
+		else res.redirect("/");
+	})
+});

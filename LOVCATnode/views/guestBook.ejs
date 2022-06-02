@@ -9,7 +9,7 @@
 			<img id="catonboard" src="catonboard.png">
 		</div><br>
 		<div id="book"><div id="bookt">guest book</div>
-			<button id="addbtn" class="btn" onclick="this.nextSibling.nextSibling.style.display = 'inline-block';">write</button>
+			<button id="addbtn" class="btn" onclick="document.getElementById('addBook').style.display = 'inline-block';">write</button>
 			<div id="addBook">
 				<form method="post" action="" onkeydown="return event.key != 'Enter';">
 					<input type="text" name="name" placeholder="write your name...(up to 255)" autocomplete="off"/>
@@ -18,7 +18,12 @@
 				</form>
 			</div>
 			<% for (var i of list) { %><div class="page">
-				<div><%= i.name %> <span> <%= i.time %></span></div><%= i.text %>
+				<div class="head"><%= i.name %> <span> <%= i.time %></span></div><div class="text"><%= i.text %>
+				</div><div class="config"><span onclick="this.parentNode.nextSibling.style.display='block';this.parentNode.previousSibling.innerHTML='';console.log(this.parentNode.previousSibling)">수정</span> <span onclick="location.href='/delete/<%= i.seq %>'">삭제</span>
+				</div><form method="post" action="/modify/<%= i.seq %>">
+					<input type="text" value="<%= i.text %>" name="text" placeholder="write text...(up to 4095)" autocomplete="off"/>
+                                        <input type="submit" class="btn" value="modify"/>
+				</form>
 			</div><% } %>
 		</div>
 	</body>
